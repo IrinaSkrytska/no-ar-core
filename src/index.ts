@@ -10,6 +10,11 @@ import {
 import "./styles.css";
 
 function initializeXRApp() {
+  const supportsXR = "xr" in window.navigator;
+  if (!supportsXR) {
+    alert("AR is not supported");
+  }
+
   const { devicePixelRatio, innerHeight, innerWidth } = window;
 
   const renderer = new WebGLRenderer({ antialias: true, alpha: true });
@@ -22,13 +27,13 @@ function initializeXRApp() {
   document.body.appendChild(renderer.domElement);
 
   document.body.appendChild(
-    ARButton.createButton(renderer, { requiredFeatures: ["hit-test"] }),
+    ARButton.createButton(renderer, { requiredFeatures: ["hit-test"] })
   );
 
   displayIntroductionMessage();
 
   createScene(renderer);
-};
+}
 
 async function start() {
   const isImmersiveArSupported = await browserHasImmersiveArCompatibility();
